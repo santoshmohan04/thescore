@@ -1,0 +1,60 @@
+<div class="card">
+  <p-table
+    #dt
+    [value]="store.employeeslist()"
+    styleClass="p-datatable-striped"
+    [paginator]="true"
+    [rows]="10"
+    [sortField]="dt.sortField"
+    [sortOrder]="dt.sortOrder"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    (sortFunction)="customSort($event)"
+    [customSort]="true"
+  >
+    <ng-template pTemplate="caption">
+      <div class="d-flex justify-content-between">
+        <p-button label="Clear" [outlined]="true" icon="pi pi-filter-slash" (onClick)="clearSort()" />
+        <span class="p-input-icon-left ml-auto">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            [(ngModel)]="searchValue"
+            (input)="dt.filterGlobal(searchValue, 'contains')"
+            placeholder="Search keyword"
+          />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="employee_name" style="width: 20%" scope="col">
+          Name <p-sortIcon field="employee_name" />
+        </th>
+        <th pSortableColumn="employee_age" style="width: 20%" scope="col">
+          Age <p-sortIcon field="employee_age" />
+        </th>
+        <th pSortableColumn="email" style="width: 20%" scope="col">
+          Email <p-sortIcon field="email" />
+        </th>
+        <th pSortableColumn="contactNumber" style="width: 20%" scope="col">
+          Contact <p-sortIcon field="contactNumber" />
+        </th>
+        <th pSortableColumn="updated_time" style="width: 20%" scope="col">
+          Updated <p-sortIcon field="updated_time" />
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customer>
+      <tr>
+        <td>{{ customer.employee_name }}</td>
+        <td>{{ customer.employee_age }}</td>
+        <td>{{ customer.email }}</td>
+        <td>{{ customer.contactNumber }}</td>
+        <td>{{ customer.updated_time | date : 'medium' }}</td>
+        <td></td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
